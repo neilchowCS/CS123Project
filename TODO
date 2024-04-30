@@ -1,0 +1,20 @@
+TASKS
+
+1.	Read about how the UPGMA, Neighbor Joining (NJ), and Parsimony genetic tree building algorithms work. Start with the
+ textbook, and if needed, do a lit search for publications that describe how the three algorithms work.
+2.	PROGRAMMER TYPES:   Implement the UPGMA and  NJ algoritms in Python 3.7 or later. You can design the format of the
+ sequences that are contained in the input file to each UPGM and NJ programs.  Use BioPython to perform a MSA on the
+ input sequences. Then build the appropriate distance matrices for each UPGMA and NJ algorithm.
+3.	BOTH PROGRAMMER AND NON-PROGRAMMER TYPES:  compare the performance with respect to accuracy and computation time for
+ the implemented UPGMA and NJ algorithms. Create a table that indicates which of the two is better for selected
+ characteristics of the input sequences and the number of input sequences related to HLA analysis.
+4.	Write a report with your findings.
+
+
+ 
+
+
+
+
+ NON-PROGRAMMER TYPES  must create a POwerPOint presentation of the project work AND a hands on exercise that uses the developed code to instruct a user on how UPGMA and NJ trees are built and interpreted and what aspects of a tree are best suited to support HLA.
+
