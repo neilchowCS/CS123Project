@@ -9,6 +9,7 @@ def UPGMA(matrix):
         m = regenerateMatrix(m, minimum[0], minimum[1])
         print(m)
 
+#returns index of minimum in 2D array
 def findMinimum(matrix):
     minimum = [0, 1]
     for i in range(len(matrix)):
@@ -19,24 +20,30 @@ def findMinimum(matrix):
                 minimum = [i, j]
     return minimum
 
+#recalculates distance matrix after combination and removal of nodes i and j (indices)
 def regenerateMatrix(matrix, i, j):
 
+    #create new matrix 1 size larger
     newMatrix = [[0.0 for x in range(len(matrix) + 1)] for y in range(len(matrix) + 1)]
 
+    #populates matrix with old distances
     for x in range(len(matrix)):
         for y in range(len(matrix)):
             newMatrix[x][y] = matrix[x][y]
 
+    #calculates new distances for added node
     for x in range(len(matrix)):
         newMatrix[x][len(newMatrix) - 1] = (newMatrix[x][i] + newMatrix[x][j])/2.0
 
     for x in range(len(matrix)):
         newMatrix[len(newMatrix) - 1][x] = (newMatrix[i][x] + newMatrix[j][x])/2.0
 
+    #removed nodes that were combined
     reduceMatrix(newMatrix, i, j)
 
     return newMatrix
 
+#removes distance information for nodes i and j from 2D array
 def reduceMatrix(matrix, i, j):
     if j < i:
         temp = j
