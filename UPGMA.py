@@ -1,5 +1,12 @@
-def UPGMA(matrix, names):
+def UPGMA(matrix, names1):
+
+    orig = names1.copy()
+    #newick format: (a:8, (b:2, d:9):4)
+
+    names = [str(i) for i in range(len(names1))]
     nodes = {}
+    nodesStr = {}
+    newick = None
     counter = 0
 
     m = matrix
@@ -7,9 +14,25 @@ def UPGMA(matrix, names):
         minimum = findMinimum(m)
 
         print("pair " + names[minimum[0]] + " " + names[minimum[1]] + " distance " + str(m[minimum[0]][minimum[1]] / 2.0))
+
+        newick = None
+        if ' ' in names[minimum[0]] and ' ' in names[minimum[1]]:
+            newick = "(" + nodesStr[names[minimum[0]]][0] + ":" + str(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1]) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1]) + ")"
+        elif ' ' in names[minimum[1]]:
+            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(m[minimum[0]][minimum[1]] / 2.0) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1]) + ")"
+        elif ' ' in names[minimum[0]]:
+            newick = "(" + nodesStr[names[minimum[0]]] + ":" + str(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1]) + "," + orig[int(names[minimum[1]])] + ":" + str(m[minimum[0]][minimum[1]] / 2.0) + ")"
+        else:
+            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(m[minimum[0]][minimum[1]] / 2.0) + "," + orig[int(names[minimum[1]])] + ":" + str(m[minimum[0]][minimum[1]] / 2.0) + ")"
+
+        nodesStr[names[minimum[0]] + " " + names[minimum[1]]] = (newick, m[minimum[0]][minimum[1]] / 2.0)
+
         m = regenerateMatrix(m, minimum[0], minimum[1], names)
         print(m)
 
+    print(nodes)
+    print(newick)
+    return newick
 
 #returns index of minimum in 2D array
 def findMinimum(matrix):
@@ -27,7 +50,7 @@ def findMinimum(matrix):
 def regenerateMatrix(matrix, i, j, names):
 
     newMatrix = [[0.0 for x in range(len(matrix) + 1)] for y in range(len(matrix) + 1)]
-    names.append(str(names[i]) + str(names[j]))
+    names.append(str(names[i]) + " " + str(names[j]))
 
     #populates matrix with old distances
     for x in range(len(matrix)):
@@ -63,7 +86,7 @@ def reduceMatrix(matrix, i, j, names):
 
 
 #testing
-n = ["A", "B", "C", "D", "E"]
-m = [[0, 9, 9, 4, 5], [9, 0, 16, 7, 9], [9, 16, 0, 11, 7], [4, 7, 11, 0, 13], [5, 9, 7, 13, 0]]
+n = ["A", "B", "C", "D", "E", "F"]
+m = [[0,6,8,1,2,6], [6,0,8,6,6,4], [8,8,0,8,8,8], [1,6,8,0,2,6], [1,6,8,2,0,6], [6,4,8,6,6,0]]
 print(m)
 UPGMA(m, n)
