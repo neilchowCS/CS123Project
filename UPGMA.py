@@ -15,7 +15,7 @@ def UPGMA(matrix, names1):
     while len(m) > 1:
         minimum = findMinimum(m)
 
-        print("pair " + names[minimum[0]] + " " + names[minimum[1]] + " distance " + str(m[minimum[0]][minimum[1]] / 2.0))
+        print("pair " + names[minimum[0]] + " and " + names[minimum[1]] + " distance " + str(m[minimum[0]][minimum[1]] / 2.0))
 
         newick = None
         if ' ' in names[minimum[0]] and ' ' in names[minimum[1]]:
