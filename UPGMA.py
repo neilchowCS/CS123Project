@@ -1,13 +1,15 @@
+import matplotlib
+from Bio import Phylo
+
+
 def UPGMA(matrix, names1):
 
     orig = names1.copy()
-    #newick format: (a:8, (b:2, d:9):4)
 
     names = [str(i) for i in range(len(names1))]
     nodes = {}
     nodesStr = {}
     newick = None
-    counter = 0
 
     m = matrix
     while len(m) > 1:
@@ -89,4 +91,9 @@ def reduceMatrix(matrix, i, j, names):
 n = ["A", "B", "C", "D", "E", "F"]
 m = [[0,6,8,1,2,6], [6,0,8,6,6,4], [8,8,0,8,8,8], [1,6,8,0,2,6], [1,6,8,2,0,6], [6,4,8,6,6,0]]
 print(m)
-UPGMA(m, n)
+string = UPGMA(m, n)
+
+#%matplotlib inline
+parser = Phylo.NewickIO.Parser.from_string(string)
+tree = parser.parse()
+Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length)
