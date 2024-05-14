@@ -27,10 +27,12 @@ def newDistMatrix(matrix):
             else:
                 newMatrix[j,i] = matrix[i,j]
     return newMatrix
+
 def smallestOTU(matrix):
     small = np.min(matrix)
     index = np.where(matrix==small)
     return index[0][0], index[1][0]
+
 def NeighborJoining(matrix):
     n = len(matrix)
     while n>2:
