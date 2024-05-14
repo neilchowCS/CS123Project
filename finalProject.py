@@ -10,17 +10,8 @@ from UPGMA import UPGMA
 from NeighborJoining import NeighborJoining
 from GenerateMatrix import calculate_distance_matrix
 
-# Fake HLA typing data
-fake_data = """id,hla_a,hla_b,hla_c
-1,A*01:01,B*08:01,C*07:01
-2,A*02:01,B*07:02,C*07:02
-3,A*03:01,B*15:01,C*03:03
-4,A*24:02,B*08:01,C*07:01
-5,A*01:01,B*08:03,C*07:04
-"""
-
-# Convert the data to a DataFrame
-hla_data = pd.read_csv(StringIO(fake_data))
+# Load real HLA typing data from CSV file
+hla_data = pd.read_csv('hla_data.csv')
 
 # Map HLA alleles to arbitrary sequences
 allele_to_seq = {
@@ -85,3 +76,21 @@ def visualize_tree(result, title):
 # Visualize UPGMA and NJ results
 visualize_tree(upgma_result, 'UPGMA Clusters')
 visualize_tree(nj_result, 'NJ Clusters')
+
+# Function to check compatibility based on distance
+def check_compatibility(distance_matrix, threshold=0.1):
+    num_seqs = len(distance_matrix)
+    compatible_pairs = []
+    for i in range(num_seqs):
+        for j in range(i + 1, num_seqs):
+            if distance_matrix[i, j] <= threshold:
+                compatible_pairs.append((i, j))
+    return compatible_pairs
+
+# Define a compatibility threshold (you can adjust this value)
+compatibility_threshold = 0.1
+
+# Check compatibility based on the distance matrix
+compatible_pairs = check_compatibility(distance_matrix, compatibility_threshold)
+print("\nCompatible Pairs (based on threshold):")
+print(compatible_pairs)
