@@ -87,13 +87,13 @@ def reduceMatrix(matrix, i, j, names):
     del names[j - 1]
 
 
-#testing
-n = ["A", "B", "C", "D", "E", "F"]
-m = [[0,6,8,1,2,6], [6,0,8,6,6,4], [8,8,0,8,8,8], [1,6,8,0,2,6], [1,6,8,2,0,6], [6,4,8,6,6,0]]
-print(m)
-string = UPGMA(m, n)
+# #testing
+# n = ["A", "B", "C", "D", "E", "F"]
+# m = [[0,6,8,1,2,6], [6,0,8,6,6,4], [8,8,0,8,8,8], [1,6,8,0,2,6], [1,6,8,2,0,6], [6,4,8,6,6,0]]
+# print(m)
+# string = UPGMA(m, n)
 
-#%matplotlib inline
-parser = Phylo.NewickIO.Parser.from_string(string)
-tree = parser.parse()
-Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length)
+# #%matplotlib inline
+# parser = Phylo.NewickIO.Parser.from_string(string)
+# tree = parser.parse()
+# Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length)
