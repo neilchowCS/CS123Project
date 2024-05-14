@@ -1,6 +1,7 @@
 import time
 import numpy as np
 import pandas as pd
+from Bio import Phylo
 from Bio.Align import MultipleSeqAlignment
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
@@ -101,5 +102,10 @@ for pair_id in pairs:
         plt.show()
 
     # Visualize UPGMA and NJ results
-    visualize_tree(upgma_result, f'UPGMA Clusters for Pair ID {pair_id}')
+    #visualize_tree(upgma_result, f'UPGMA Clusters for Pair ID {pair_id}')
+
+    parser = Phylo.NewickIO.Parser.from_string(upgma_result)
+    tree = parser.parse()
+    Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length)
+
     visualize_tree(nj_result, f'NJ Clusters for Pair ID {pair_id}')
