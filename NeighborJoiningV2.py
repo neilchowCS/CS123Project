@@ -18,6 +18,16 @@ def max_index_neighbor(graph, node):
     else:
         return None
 
+def divergence_matrix(matrix):
+    n = len(matrix)
+    div_matrix = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                div_matrix[i, j] = matrix[i, j] - (sum(matrix[i]) + sum(matrix[j])) / (n - 2.0)
+    return div_matrix
+
+
 def NeighborJoining2(matrix):
     safe = len(matrix)
     n = len(matrix)
@@ -28,37 +38,47 @@ def NeighborJoining2(matrix):
     counter = n
 
     for i in range(len(matrix)+1):
-        G.add_edge(i, sys.maxsize, weight = 1)
+        G.add_edge(i, sys.maxsize, lengthx = 1)
 
 
 
     while n > 2:
-        div_matrix = NeighborJoining.divergence_matrix(matrix)
+        div_matrix = divergence_matrix(matrix)
         i, j = NeighborJoining.smallestOTU(div_matrix)
         new_cluster = clusters[i] + clusters[j]
+
+        print(matrix[i][j])
+        print(sum(matrix[i]))
+        print(sum((matrix[j])))
+        print(n)
+        #S(AU) =d(AB) / 2 + [r(A) - r(B)] / 2(N-2) = 1
+        weight1 = round((matrix[i][j])/2.0 + (sum(matrix[i]) - sum(matrix[j]))/(2.0*(n-2)),2)
+
+        weight2 = (matrix[i][j]) - weight1
 
         counter+=1
         print("combine " + str(i) + " and " + str(j) + " to " + str(counter))
         print("delete (" + str(nodes[i]) + ", " + str(max_index_neighbor(G, nodes[i])) + ")")
         print("delete (" + str(nodes[j]) + ", " + str(max_index_neighbor(G, nodes[j])) + ")")
-        print(nodes)
+
+        print(weight1)
+        print(weight2)
 
         x = max_index_neighbor(G, nodes[i])
         G.remove_edge(nodes[i], x)
         G.remove_edge(nodes[j], max_index_neighbor(G, nodes[j]))
 
         #G.add_node(counter)
-        G.add_edge(nodes[i], counter, weight = 1)
-        G.add_edge(nodes[j], counter, weight=1)
-        G.add_edge(counter, x, weight=1)
+        G.add_edge(nodes[i], counter, lengthx = weight1)
+        G.add_edge(nodes[j], counter, lengthx= weight2)
+        G.add_edge(counter, x, lengthx=1)
 
         nodes = np.delete(nodes,[i,j])
-        print(nodes)
         nodes = np.append(nodes, counter)
-        print(nodes)
 
         clusters = [clusters[k] for k in range(len(clusters)) if k != i and k != j]
         clusters.append(new_cluster)
+
         new_matrix = NeighborJoining.newDistMatrix(matrix, i, j)
         matrix = new_matrix
         n -= 1
@@ -75,6 +95,8 @@ def NeighborJoining2(matrix):
     nx.draw_networkx_edges(
         G, pos, ax=ax
     )
+    weights = nx.get_edge_attributes(G, 'lengthx')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=weights)
     nx.draw_networkx_labels(
         G, pos, ax=ax, labels= labels , font_size=10,
         # Draw a white background behind the labeled nodes
