@@ -86,7 +86,7 @@ for pair_id in pairs:
         return compatible_pairs
 
     # Define a compatibility threshold 
-    compatibility_threshold = 0.8 
+    compatibility_threshold = 0.5
 
     # Check compatibility based on the distance matrix
     compatible_pairs = check_compatibility(distance_matrix, compatibility_threshold)
