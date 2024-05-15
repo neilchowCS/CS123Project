@@ -7,9 +7,6 @@ import networkx as nx
 import numpy as np
 
 import NeighborJoining
-
-m= np.array([[0,0.189,0.1100,0.1130,0.2150],[0.1890,0,0.1790,0.1920,0.2110], [0.1100,0.1790,0,0.0940,0.2050], [0.1130,0.1920,0.0940,0,0.2140], [0.2150,0.2110,0.2050,0.2140,0]])
-
 def max_index_neighbor(graph, node):
     neighbors = list(graph.neighbors(node))
     if neighbors:
@@ -146,7 +143,6 @@ def displayGraph(G, names):
 
     plt.show()
 
-#NeighborJoining2(m,["Gorilla","Orangutan","Human","Chimp","Gibbon"] ,5)
 #
 # edge_length = {
 #     (0, 1) : 0.3,

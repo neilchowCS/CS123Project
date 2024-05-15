@@ -7,6 +7,8 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from io import StringIO
 import matplotlib.pyplot as plt
+
+import NeighborJoiningV2
 from UPGMA import UPGMA
 from NeighborJoining import NeighborJoining
 from GenerateMatrix import calculate_distance_matrix
@@ -55,7 +57,8 @@ for pair_id in pairs:
 
     # Run and time NJ
     start_time = time.time()
-    nj_result = NeighborJoining(distance_matrix)
+    #nj_result = NeighborJoining(distance_matrix)
+    nj_result = NeighborJoiningV2.NeighborJoining2(distance_matrix, 5)
     nj_time = time.time() - start_time
 
     # Performance comparison
@@ -73,7 +76,7 @@ for pair_id in pairs:
     print(upgma_result)
 
     print(f"\nNeighbor Joining (NJ) Result for Pair ID {pair_id}:")
-    print(nj_result)
+    print(nj_result[0])
 
     # Function to check compatibility based on distance
     def check_compatibility(distance_matrix, threshold=0.1):
@@ -108,4 +111,5 @@ for pair_id in pairs:
     tree = parser.parse()
     Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length)
 
-    visualize_tree(nj_result, f'NJ Clusters for Pair ID {pair_id}')
+    NeighborJoiningV2.displayGraph(nj_result[1], [str(i) for i in range(len(seq_records))])
+    #visualize_tree(nj_result, f'NJ Clusters for Pair ID {pair_id}')
