@@ -57,7 +57,7 @@ def newDistMatrix(matrix, i, j):
 
     return newMatrix
 
-def NeighborJoining2(matrix, names, digitsToRound):
+def NeighborJoining2(matrix,digitsToRound):
     safe = len(matrix)
     n = len(matrix)
     clusters = [[i] for i in range(n)]
@@ -66,7 +66,6 @@ def NeighborJoining2(matrix, names, digitsToRound):
     nodes = np.arange(len(matrix))
     counter = n
 
-    nameLabels = {it :names[it] for it in range(len(names))}
 
     for i in range(len(matrix)):
         G.add_edge(i, sys.maxsize, lengthx = 1)
@@ -111,12 +110,18 @@ def NeighborJoining2(matrix, names, digitsToRound):
 
         n -= 1
 
-        if (n == 2):
-            x = max_index_neighbor(G, nodes[0])
-            G.remove_edge(nodes[0], x)
-            G.remove_edge(nodes[1], max_index_neighbor(G, nodes[1]))
+    if (n == 2):
+        x = max_index_neighbor(G, nodes[0])
+        G.remove_edge(nodes[0], x)
+        G.remove_edge(nodes[1], max_index_neighbor(G, nodes[1]))
 
-            G.add_edge(nodes[0], nodes[1], lengthx= round(matrix[0,1], digitsToRound))
+        G.add_edge(nodes[0], nodes[1], lengthx= round(matrix[0,1], digitsToRound))
+
+    return clusters
+
+def displayGraph(G, names):
+
+    nameLabels = {it :names[it] for it in range(len(names))}
 
     fig = plt.figure(figsize=(8.0, 8.0))
     ax = fig.gca()
@@ -124,7 +129,7 @@ def NeighborJoining2(matrix, names, digitsToRound):
     # Calculate position of nodes in the plot
     pos = nx.kamada_kawai_layout(G)
     # Assign the gene names to the nodes that represent a reference index
-    #node_labels = {i: name for i, name in enumerate(genes)}
+    # node_labels = {i: name for i, name in enumerate(genes)}
 
     nx.draw_networkx_edges(
         G, pos, ax=ax
@@ -132,7 +137,7 @@ def NeighborJoining2(matrix, names, digitsToRound):
     weights = nx.get_edge_attributes(G, 'lengthx')
     nx.draw_networkx_edge_labels(G, pos, edge_labels=weights)
     nx.draw_networkx_labels(
-        G, pos, ax=ax, labels= nameLabels , font_size=10,
+        G, pos, ax=ax, labels=nameLabels, font_size=10,
         # Draw a white background behind the labeled nodes
         # for better readability
         bbox=dict(pad=0, color="white")
@@ -140,7 +145,6 @@ def NeighborJoining2(matrix, names, digitsToRound):
     fig.tight_layout()
 
     plt.show()
-    return clusters
 
 #NeighborJoining2(m,["Gorilla","Orangutan","Human","Chimp","Gibbon"] ,5)
 #
