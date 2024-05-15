@@ -10,19 +10,29 @@ import NeighborJoining
 
 m= np.array([[0,5,4,7,6,8],[5,0,7,10,9,11], [4, 7,0,7,6,8], [7, 10, 7,0,5,9], [6, 9, 6, 5,0,8],  [8, 11, 8, 9, 8,0]])
 
+def max_index_neighbor(graph, node):
+    neighbors = list(graph.neighbors(node))
+    if neighbors:
+        max_index_node = max(neighbors)
+        return max_index_node
+    else:
+        return None
 
 def NeighborJoining2(matrix):
+    safe = len(matrix)
     n = len(matrix)
     clusters = [[i] for i in range(n)]
 
     G = nx.Graph()
-    nodes = np.array(0)
+    nodes = np.arange(len(matrix) + 1)
     counter = n
 
-    for i in range(len(m)+1):
-        G.add_edge(i, -1, weight = 1)
+    for i in range(len(matrix)+1):
+        G.add_edge(i, sys.maxsize, weight = 1)
 
-    for i in range(1):
+
+
+    for i in range(5):
     #while n > 2:
         div_matrix = NeighborJoining.divergence_matrix(matrix)
         i, j = NeighborJoining.smallestOTU(div_matrix)
@@ -30,17 +40,23 @@ def NeighborJoining2(matrix):
 
         counter+=1
         print("combine " + str(i) + " and " + str(j) + " to " + str(counter))
-        print("delete (" + str(i) + ", " + str(list(G.neighbors(i))[0]) + ")")
-        print("delete (" + str(j) + ", " + str(list(G.neighbors(j))[0]) + ")")
+        print("delete (" + str(nodes[i]) + ", " + str(max_index_neighbor(G, nodes[i])) + ")")
+        print("delete (" + str(nodes[j]) + ", " + str(max_index_neighbor(G, nodes[j])) + ")")
+        print(nodes)
 
-        x = list(G.neighbors(i))[0]
-        G.remove_edge(i, x)
-        G.remove_edge(list(G.neighbors(j))[0], j)
+        x = max_index_neighbor(G, nodes[i])
+        G.remove_edge(nodes[i], x)
+        G.remove_edge(nodes[j], max_index_neighbor(G, nodes[j]))
 
         #G.add_node(counter)
-        G.add_edge(i, counter, weight = 1)
-        G.add_edge(j, counter, weight=1)
+        G.add_edge(nodes[i], counter, weight = 1)
+        G.add_edge(nodes[j], counter, weight=1)
         G.add_edge(counter, x, weight=1)
+
+        nodes = np.delete(nodes,[i,j])
+        print(nodes)
+        nodes = np.append(nodes, counter)
+        print(nodes)
 
         clusters = [clusters[k] for k in range(len(clusters)) if k != i and k != j]
         clusters.append(new_cluster)
@@ -55,11 +71,13 @@ def NeighborJoining2(matrix):
     pos = nx.kamada_kawai_layout(G)
     # Assign the gene names to the nodes that represent a reference index
     #node_labels = {i: name for i, name in enumerate(genes)}
+    labels = {x: x for x in range(safe + 1)}
+
     nx.draw_networkx_edges(
         G, pos, ax=ax
     )
     nx.draw_networkx_labels(
-        G, pos, ax=ax, #labels=node_labels, font_size=7,
+        G, pos, ax=ax, labels= labels , font_size=10,
         # Draw a white background behind the labeled nodes
         # for better readability
         bbox=dict(pad=0, color="white")
