@@ -3,7 +3,7 @@ import sys
 import matplotlib.pyplot as plt
 import networkx as nx
 #import pygraphviz
-import netgraph
+#import netgraph
 import numpy as np
 
 import NeighborJoining
@@ -32,8 +32,7 @@ def NeighborJoining2(matrix):
 
 
 
-    for i in range(5):
-    #while n > 2:
+    while n > 2:
         div_matrix = NeighborJoining.divergence_matrix(matrix)
         i, j = NeighborJoining.smallestOTU(div_matrix)
         new_cluster = clusters[i] + clusters[j]
