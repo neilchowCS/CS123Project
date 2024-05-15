@@ -117,7 +117,7 @@ def NeighborJoining2(matrix,digitsToRound):
 
         G.add_edge(nodes[0], nodes[1], lengthx= round(matrix[0,1], digitsToRound))
 
-    return clusters
+    return (clusters, G)
 
 def displayGraph(G, names):
 
