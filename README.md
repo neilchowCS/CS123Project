@@ -19,7 +19,7 @@ You can install the required Python libraries using pip:
 pip install numpy pandas biopython matplotlib
 
 Running the Analysis
-Prepare HLA Data and HLA Sequences (need real data here)
+Prepare HLA Data and HLA Sequences
 Run the Main Script: python finalProject.py
 
 Output
