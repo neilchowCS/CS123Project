@@ -158,9 +158,9 @@ def saveGraph(G, names):
         G, pos, ax=ax
     )
     weights = nx.get_edge_attributes(G, 'lengthx')
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=weights)
+    nx.draw_networkx_edge_labels(G, pos, font_size=5, edge_labels=weights)
     nx.draw_networkx_labels(
-        G, pos, ax=ax, labels=nameLabels, font_size=10,
+        G, pos, ax=ax, labels=nameLabels, font_size=8,
         # Draw a white background behind the labeled nodes
         # for better readability
         bbox=dict(pad=0, color="white")
