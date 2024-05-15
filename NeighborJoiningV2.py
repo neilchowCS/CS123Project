@@ -66,6 +66,8 @@ def NeighborJoining2(matrix, names, digitsToRound):
     nodes = np.arange(len(matrix))
     counter = n
 
+    nameLabels = {it :names[it] for it in range(len(names))}
+
     for i in range(len(matrix)):
         G.add_edge(i, sys.maxsize, lengthx = 1)
 
@@ -130,7 +132,7 @@ def NeighborJoining2(matrix, names, digitsToRound):
     weights = nx.get_edge_attributes(G, 'lengthx')
     nx.draw_networkx_edge_labels(G, pos, edge_labels=weights)
     nx.draw_networkx_labels(
-        G, pos, ax=ax, labels= names , font_size=10,
+        G, pos, ax=ax, labels= nameLabels , font_size=10,
         # Draw a white background behind the labeled nodes
         # for better readability
         bbox=dict(pad=0, color="white")
@@ -140,7 +142,7 @@ def NeighborJoining2(matrix, names, digitsToRound):
     plt.show()
     return clusters
 
-NeighborJoining2(m,{0:"Gorilla",1:"Orangutan",2:"Human",3:"Chimp",4:"Gibbon"} ,5)
+#NeighborJoining2(m,["Gorilla","Orangutan","Human","Chimp","Gibbon"] ,5)
 #
 # edge_length = {
 #     (0, 1) : 0.3,
