@@ -74,16 +74,16 @@ def NeighborJoining2(matrix,digitsToRound):
         i, j = NeighborJoining.smallestOTU(div_matrix)
         new_cluster = clusters[i] + clusters[j]
 
-        print(div_matrix)
+        #print(div_matrix)
 
         #S(AU) =d(AB) / 2 + [r(A) - r(B)] / 2(N-2) = 1
         minlen1 = round((matrix[i][j])/2.0 + (r[i] - r[j])/(2.0*(n-2)),digitsToRound)
         minlen2 = round((matrix[i][j]) - minlen1,digitsToRound)
 
         counter+=1
-        print("combine " + str(i) + " and " + str(j) + " to " + str(counter))
-        print("delete (" + str(nodes[i]) + ", " + str(max_index_neighbor(G, nodes[i])) + ")")
-        print("delete (" + str(nodes[j]) + ", " + str(max_index_neighbor(G, nodes[j])) + ")")
+        #print("combine " + str(i) + " and " + str(j) + " to " + str(counter))
+        #print("delete (" + str(nodes[i]) + ", " + str(max_index_neighbor(G, nodes[i])) + ")")
+        #print("delete (" + str(nodes[j]) + ", " + str(max_index_neighbor(G, nodes[j])) + ")")
 
         x = max_index_neighbor(G, nodes[i])
         G.remove_edge(nodes[i], x)
@@ -103,8 +103,7 @@ def NeighborJoining2(matrix,digitsToRound):
         new_matrix = newDistMatrix(matrix, i, j)
         matrix = new_matrix
 
-        print(matrix)
-
+        #print(matrix)
         n -= 1
 
     if (n == 2):
@@ -123,10 +122,8 @@ def displayGraph(G, names):
     fig = plt.figure(figsize=(8.0, 8.0))
     ax = fig.gca()
     ax.axis("off")
-    # Calculate position of nodes in the plot
+
     pos = nx.kamada_kawai_layout(G)
-    # Assign the gene names to the nodes that represent a reference index
-    # node_labels = {i: name for i, name in enumerate(genes)}
 
     nx.draw_networkx_edges(
         G, pos, ax=ax
@@ -135,8 +132,6 @@ def displayGraph(G, names):
     nx.draw_networkx_edge_labels(G, pos, edge_labels=minlens, font_size=8)
     nx.draw_networkx_labels(
         G, pos, ax=ax, labels=nameLabels, font_size=10,
-        # Draw a white background behind the labeled nodes
-        # for better readability
         bbox=dict(pad=0, color="white")
     )
     fig.tight_layout()
@@ -149,10 +144,8 @@ def saveGraph(G, names, file_name):
     fig = plt.figure(figsize=(8.0, 8.0))
     ax = fig.gca()
     ax.axis("off")
-    # Calculate position of nodes in the plot
+
     pos = nx.kamada_kawai_layout(G)
-    # Assign the gene names to the nodes that represent a reference index
-    # node_labels = {i: name for i, name in enumerate(genes)}
 
     nx.draw_networkx_edges(
         G, pos, ax=ax
@@ -161,8 +154,6 @@ def saveGraph(G, names, file_name):
     nx.draw_networkx_edge_labels(G, pos, font_size=4, edge_labels=minlens)
     nx.draw_networkx_labels(
         G, pos, ax=ax, labels=nameLabels, font_size=8,
-        # Draw a white background behind the labeled nodes
-        # for better readability
         bbox=dict(pad=0, color="white")
     )
     fig.tight_layout()

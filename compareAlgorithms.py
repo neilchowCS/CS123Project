@@ -15,7 +15,6 @@ for c in range(len(suffix)):
     alignment = AlignIO.read("io/aligned_" + suffix[c] + ".txt", "fasta")
     for record in alignment:
         names.append(record.id)
-        print(record.id)
 
     distance_matrix = calculate_distance_matrix(alignment)
 

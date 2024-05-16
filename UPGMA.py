@@ -15,7 +15,7 @@ def UPGMA(matrix, names1, place_to_round):
     while len(m) > 1:
         minimum = findMinimum(m)
 
-        print("pair " + names[minimum[0]] + " and " + names[minimum[1]] + " distance " + str(m[minimum[0]][minimum[1]] / 2.0))
+        #print("pair " + names[minimum[0]] + " and " + names[minimum[1]] + " distance " + str(m[minimum[0]][minimum[1]] / 2.0))
 
         newick = None
         if ' ' in names[minimum[0]] and ' ' in names[minimum[1]]:
@@ -30,9 +30,9 @@ def UPGMA(matrix, names1, place_to_round):
         nodesStr[names[minimum[0]] + " " + names[minimum[1]]] = (newick, m[minimum[0]][minimum[1]] / 2.0)
 
         m = regenerateMatrix(m, minimum[0], minimum[1], names)
-        print(m)
+        #print(m)
 
-    print(nodes)
+    #print(nodes)
     print(newick)
     return newick
 
