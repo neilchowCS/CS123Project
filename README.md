@@ -37,5 +37,27 @@ Ex. If you wish to additionally analyze BRAF, you can place it into the list
 ["HLAA", "HLAB","HLAC", "BRAF"]
 and make sure "aligned_BRAF.txt" containing the sequences is in the io folder.
 
-Output
-The script will print the performance comparison of UPGMA and Neighbor Joining algorithms and the results for each pair of individuals. Additionally, it will visualize the UPGMA and Neighbor Joining clusters for each pair.
+Running Individual Tree Algorithms
+GenerateMatrix:
+1. Obtain aligned sequences
+2. Call the calculate_distance_matrix function
+PARAMETERS: Bio.Align.MultipleSeqAlignment
+RETURNS: Distance matrix
+
+NeighborJoiningV2:
+1. Obtain distance matrix
+2. Call the NeighborJoining2 function
+PARAMETERS: (matrix: 2D distance matrix, digits_to_round: int)
+RETURNS: tuple (clusters: array representation of tree, G: NetworkX graph)
+3. Call the saveGraph function to save graph to png
+PARAMETERS: (G: NetworkX graph, names: list of taxa names, same count as sequences, file_name: file name to save to)
+4. OR Call the displayGraph function to display graph
+PARAMETERS: (G: NetworkX graph, names: list of taxa names, same count as sequences)
+
+UPGMA:
+1. Obtain distance matrix
+2. Call the UPGMA function
+PARAMETERS: (matrix: 2D distance matrix, names: list of taxa names, same count as sequences, digits_to_round: int)
+RETURNS: string: Newick format representation of tree
+3. Use Bio.Phylo to draw tree from Newick
+4. Use matplotlib to save graph

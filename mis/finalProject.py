@@ -1,16 +1,13 @@
 import time
-import numpy as np
 import pandas as pd
 from Bio import Phylo
 from Bio.Align import MultipleSeqAlignment
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-from io import StringIO
 import matplotlib.pyplot as plt
 
 import NeighborJoiningV2
 from UPGMA import UPGMA
-from NeighborJoining import NeighborJoining
 from GenerateMatrix import calculate_distance_matrix
 
 # Load real HLA typing data from CSV file

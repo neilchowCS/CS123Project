@@ -6,7 +6,9 @@ import networkx as nx
 #import netgraph
 import numpy as np
 
-import NeighborJoining
+from mis import NeighborJoining
+
+
 def max_index_neighbor(graph, node):
     neighbors = list(graph.neighbors(node))
     if neighbors:
@@ -54,8 +56,7 @@ def newDistMatrix(matrix, i, j):
 
     return newMatrix
 
-def NeighborJoining2(matrix,digitsToRound):
-    safe = len(matrix)
+def NeighborJoining2(matrix, digits_to_round):
     n = len(matrix)
     clusters = [[i] for i in range(n)]
 
@@ -77,8 +78,8 @@ def NeighborJoining2(matrix,digitsToRound):
         #print(div_matrix)
 
         #S(AU) =d(AB) / 2 + [r(A) - r(B)] / 2(N-2) = 1
-        minlen1 = round((matrix[i][j])/2.0 + (r[i] - r[j])/(2.0*(n-2)),digitsToRound)
-        minlen2 = round((matrix[i][j]) - minlen1,digitsToRound)
+        minlen1 = round((matrix[i][j]) / 2.0 + (r[i] - r[j]) / (2.0*(n-2)), digits_to_round)
+        minlen2 = round((matrix[i][j]) - minlen1, digits_to_round)
 
         counter+=1
         #print("combine " + str(i) + " and " + str(j) + " to " + str(counter))
@@ -103,7 +104,6 @@ def NeighborJoining2(matrix,digitsToRound):
         new_matrix = newDistMatrix(matrix, i, j)
         matrix = new_matrix
 
-        #print(matrix)
         n -= 1
 
     if (n == 2):
@@ -111,7 +111,7 @@ def NeighborJoining2(matrix,digitsToRound):
         G.remove_edge(nodes[0], x)
         G.remove_edge(nodes[1], max_index_neighbor(G, nodes[1]))
 
-        G.add_edge(nodes[0], nodes[1], minlen= round(matrix[0,1], digitsToRound))
+        G.add_edge(nodes[0], nodes[1], minlen= round(matrix[0,1], digits_to_round))
 
     return (clusters, G)
 
