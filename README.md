@@ -7,6 +7,7 @@ compareAlgorithms.py: Main script to perform the analysis.
 UPGMA.py: Script containing the implementation of the UPGMA algorithm.
 NeighborJoiningV2.py: Script containing the implementation of the Neighbor Joining algorithm.
 msa_clustalomega.py: Script containing the Clustal Omega Multiple Sequence Alignment algorithm.
+GenerateMatrix.py: Script to calculate the distance matrix from sequence alignments.
 io Folder: contains input and output files
     -input: contains unaligned sequence data in fasta format, input to msa_clustalomega
     -aligned: contains sequence data that is aligned in fasta format, input to compareAlgorithms
