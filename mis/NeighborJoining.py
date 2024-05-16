@@ -25,6 +25,7 @@ def newDistMatrix(matrix, i, j):
     return new_matrix
 
 def smallestOTU(matrix):
+    """Returns pair of indices with smallest value in matrix."""
     min_val = np.inf
     min_indices = (0, 1)
     n = len(matrix)
