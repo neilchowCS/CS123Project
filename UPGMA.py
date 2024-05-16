@@ -21,9 +21,9 @@ def UPGMA(matrix, names1, place_to_round):
         if ' ' in names[minimum[0]] and ' ' in names[minimum[1]]:
             newick = "(" + nodesStr[names[minimum[0]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1], place_to_round)) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1], place_to_round)) + ")"
         elif ' ' in names[minimum[1]]:
-            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0)) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1], place_to_round)) + ")"
+            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0,place_to_round)) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1], place_to_round)) + ")"
         elif ' ' in names[minimum[0]]:
-            newick = "(" + nodesStr[names[minimum[0]]] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1]), place_to_round) + "," + orig[int(names[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0,place_to_round)) + ")"
+            newick = "(" + nodesStr[names[minimum[0]]] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1], place_to_round)) + "," + orig[int(names[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0,place_to_round)) + ")"
         else:
             newick = "(" + orig[int(names[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, place_to_round)) + "," + orig[int(names[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0,place_to_round)) + ")"
 
