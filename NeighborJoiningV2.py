@@ -129,9 +129,9 @@ def displayGraph(G, names):
         G, pos, ax=ax
     )
     minlens = nx.get_edge_attributes(G, 'minlen')
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=minlens, font_size=8)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=minlens, font_size=5)
     nx.draw_networkx_labels(
-        G, pos, ax=ax, labels=nameLabels, font_size=10,
+        G, pos, ax=ax, labels=nameLabels, font_size=8,
         bbox=dict(pad=0, color="white")
     )
     fig.tight_layout()
@@ -151,9 +151,9 @@ def saveGraph(G, names, file_name):
         G, pos, ax=ax
     )
     minlens = nx.get_edge_attributes(G, 'minlen')
-    nx.draw_networkx_edge_labels(G, pos, font_size=4, edge_labels=minlens)
+    nx.draw_networkx_edge_labels(G, pos, font_size=6, edge_labels=minlens)
     nx.draw_networkx_labels(
-        G, pos, ax=ax, labels=nameLabels, font_size=8,
+        G, pos, ax=ax, labels=nameLabels, font_size=6,
         bbox=dict(pad=0, color="white")
     )
     fig.tight_layout()
