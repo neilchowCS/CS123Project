@@ -16,8 +16,8 @@ for record in alignment:
 
 distance_matrix = calculate_distance_matrix(alignment)
 
-upgma_result = UPGMA.UPGMA(distance_matrix,names)
-nj_result = NeighborJoiningV2.NeighborJoining2(distance_matrix,5)
+upgma_result = UPGMA.UPGMA(distance_matrix,names, 4)
+nj_result = NeighborJoiningV2.NeighborJoining2(distance_matrix,4)
 
 parser = Phylo.NewickIO.Parser.from_string(upgma_result)
 tree = parser.parse()

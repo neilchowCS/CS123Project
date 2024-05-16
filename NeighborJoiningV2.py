@@ -65,7 +65,7 @@ def NeighborJoining2(matrix,digitsToRound):
 
 
     for i in range(len(matrix)):
-        G.add_edge(i, sys.maxsize, lengthx = 1)
+        G.add_edge(i, sys.maxsize, minlen = 1)
 
     #for xx in range(3):
     while n > 2:
@@ -77,8 +77,8 @@ def NeighborJoining2(matrix,digitsToRound):
         print(div_matrix)
 
         #S(AU) =d(AB) / 2 + [r(A) - r(B)] / 2(N-2) = 1
-        weight1 = round((matrix[i][j])/2.0 + (r[i] - r[j])/(2.0*(n-2)),digitsToRound)
-        weight2 = round((matrix[i][j]) - weight1,digitsToRound)
+        minlen1 = round((matrix[i][j])/2.0 + (r[i] - r[j])/(2.0*(n-2)),digitsToRound)
+        minlen2 = round((matrix[i][j]) - minlen1,digitsToRound)
 
         counter+=1
         print("combine " + str(i) + " and " + str(j) + " to " + str(counter))
@@ -90,9 +90,9 @@ def NeighborJoining2(matrix,digitsToRound):
         G.remove_edge(nodes[j], max_index_neighbor(G, nodes[j]))
 
         #G.add_node(counter)
-        G.add_edge(nodes[i], counter, lengthx = weight1)
-        G.add_edge(nodes[j], counter, lengthx= weight2)
-        G.add_edge(counter, x, lengthx=1)
+        G.add_edge(nodes[i], counter, minlen = minlen1)
+        G.add_edge(nodes[j], counter, minlen= minlen2)
+        G.add_edge(counter, x, minlen=1)
 
         nodes = np.delete(nodes,[i,j])
         nodes = np.append(nodes, counter)
@@ -112,7 +112,7 @@ def NeighborJoining2(matrix,digitsToRound):
         G.remove_edge(nodes[0], x)
         G.remove_edge(nodes[1], max_index_neighbor(G, nodes[1]))
 
-        G.add_edge(nodes[0], nodes[1], lengthx= round(matrix[0,1], digitsToRound))
+        G.add_edge(nodes[0], nodes[1], minlen= round(matrix[0,1], digitsToRound))
 
     return (clusters, G)
 
@@ -131,8 +131,8 @@ def displayGraph(G, names):
     nx.draw_networkx_edges(
         G, pos, ax=ax
     )
-    weights = nx.get_edge_attributes(G, 'lengthx')
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=weights)
+    minlens = nx.get_edge_attributes(G, 'minlen')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=minlens, font_size=8)
     nx.draw_networkx_labels(
         G, pos, ax=ax, labels=nameLabels, font_size=10,
         # Draw a white background behind the labeled nodes
@@ -157,8 +157,8 @@ def saveGraph(G, names):
     nx.draw_networkx_edges(
         G, pos, ax=ax
     )
-    weights = nx.get_edge_attributes(G, 'lengthx')
-    nx.draw_networkx_edge_labels(G, pos, font_size=5, edge_labels=weights)
+    minlens = nx.get_edge_attributes(G, 'minlen')
+    nx.draw_networkx_edge_labels(G, pos, font_size=4, edge_labels=minlens)
     nx.draw_networkx_labels(
         G, pos, ax=ax, labels=nameLabels, font_size=8,
         # Draw a white background behind the labeled nodes

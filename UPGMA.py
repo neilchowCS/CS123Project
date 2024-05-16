@@ -2,7 +2,7 @@ import matplotlib
 from Bio import Phylo
 
 
-def UPGMA(matrix, names1):
+def UPGMA(matrix, names1, place_to_round):
 
     orig = names1.copy()
 
@@ -19,13 +19,13 @@ def UPGMA(matrix, names1):
 
         newick = None
         if ' ' in names[minimum[0]] and ' ' in names[minimum[1]]:
-            newick = "(" + nodesStr[names[minimum[0]]][0] + ":" + str(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1]) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1]) + ")"
+            newick = "(" + nodesStr[names[minimum[0]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1], place_to_round)) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1], place_to_round)) + ")"
         elif ' ' in names[minimum[1]]:
-            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(m[minimum[0]][minimum[1]] / 2.0) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1]) + ")"
+            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0)) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1], place_to_round)) + ")"
         elif ' ' in names[minimum[0]]:
-            newick = "(" + nodesStr[names[minimum[0]]] + ":" + str(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1]) + "," + orig[int(names[minimum[1]])] + ":" + str(m[minimum[0]][minimum[1]] / 2.0) + ")"
+            newick = "(" + nodesStr[names[minimum[0]]] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1]), place_to_round) + "," + orig[int(names[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0,place_to_round)) + ")"
         else:
-            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(m[minimum[0]][minimum[1]] / 2.0) + "," + orig[int(names[minimum[1]])] + ":" + str(m[minimum[0]][minimum[1]] / 2.0) + ")"
+            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, place_to_round)) + "," + orig[int(names[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0,place_to_round)) + ")"
 
         nodesStr[names[minimum[0]] + " " + names[minimum[1]]] = (newick, m[minimum[0]][minimum[1]] / 2.0)
 
@@ -88,12 +88,12 @@ def reduceMatrix(matrix, i, j, names):
 
 
 # #testing
-# n = ["A", "B", "C", "D", "E", "F"]
-# m = [[0,6,8,1,2,6], [6,0,8,6,6,4], [8,8,0,8,8,8], [1,6,8,0,2,6], [1,6,8,2,0,6], [6,4,8,6,6,0]]
+# n = ["A", "B", "C", "D", "E"]
+# m = [[0,6,1,2,6], [6,0,6,6,4], [1,6,0,2,6], [1,6,2,0,6], [6,4,6,6,0]]
 # print(m)
 # string = UPGMA(m, n)
 
-# #%matplotlib inline
-# parser = Phylo.NewickIO.Parser.from_string(string)
-# tree = parser.parse()
-# Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length)
+#%matplotlib inline
+#parser = Phylo.NewickIO.Parser.from_string(string)
+#tree = parser.parse()
+#Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length)
