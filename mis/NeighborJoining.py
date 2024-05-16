@@ -1,6 +1,6 @@
 # m= [[5], [4, 7], [7, 10, 7], [6, 9, 6, 5], [8, 11, 8, 9, 8]]
 import numpy as np
-
+"""Incorrect version of neighbor joining. Methods are reused in version 2"""
 # r(A) = [1/(L-2)] * [d(AB) + d(AC) = d(AD)]
 def divergence_matrix(matrix):
     n = len(matrix)

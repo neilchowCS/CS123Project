@@ -7,7 +7,7 @@ import networkx as nx
 import numpy as np
 
 from mis import NeighborJoining
-
+"""Contains methods to generate phylogenetic trees using the neighbor joining algorithm and to view/save trees."""
 def max_index_neighbor(graph, node):
     """Returns neighbor with highest index of node."""
     neighbors = list(graph.neighbors(node))

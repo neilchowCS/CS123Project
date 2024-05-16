@@ -1,6 +1,7 @@
 import matplotlib
 from Bio import Phylo
 
+"""Contains methods to generate phylogenetic trees using the UPGMA algorithm and to view/save trees."""
 
 def UPGMA(matrix, names, digits_to_round):
     """Performs UPGMA and returns tree in Newick format string."""

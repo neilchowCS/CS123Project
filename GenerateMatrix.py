@@ -1,6 +1,6 @@
 import numpy as np
 from Bio.Align import MultipleSeqAlignment
-
+"""Contains methods to compute distance matrix."""
 def calculate_distance_matrix(alignments):
     """Generate distance matrix and return as 2D numpy array."""
     num_seqs = len(alignments)
