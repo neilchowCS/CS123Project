@@ -9,6 +9,8 @@ import GenerateMatrix
 import NeighborJoiningV2
 import UPGMA
 
+"""Run this file to compute phylogenetic trees for HLA A, HLA B, and HLA C aligned sequences in io folder."""
+
 #suffix of input files read and png files output
 suffix = ["HLAA", "HLAB","HLAC"]
 

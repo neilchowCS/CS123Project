@@ -9,6 +9,7 @@ import numpy as np
 from mis import NeighborJoining
 
 def max_index_neighbor(graph, node):
+    """Returns neighbor with highest index of node."""
     neighbors = list(graph.neighbors(node))
     if neighbors:
         max_index_node = max(neighbors)
@@ -17,6 +18,7 @@ def max_index_neighbor(graph, node):
         return None
 
 def divergence_matrix(matrix, r):
+    """Returns divergence matrix."""
     n = len(matrix)
     div_matrix = np.zeros((n, n))
     for i in range(n):
@@ -27,6 +29,7 @@ def divergence_matrix(matrix, r):
 
 # d(CU) = (d(AC) + d(BC) - d(AB)) / 2 = 3
 def newDistMatrix(matrix, i, j):
+    """Generates new distance matrix after pairing of i and j."""
     n = len(matrix)
     newMatrix = np.zeros((n + 1, n + 1))
     index = 0
@@ -56,6 +59,7 @@ def newDistMatrix(matrix, i, j):
     return newMatrix
 
 def NeighborJoining2(matrix, digits_to_round):
+    """Performs neighbor joining algorithm and returns tuple (array representation of tree, NetworkX graph)."""
     n = len(matrix)
     clusters = [[i] for i in range(n)]
 
@@ -115,7 +119,7 @@ def NeighborJoining2(matrix, digits_to_round):
     return (clusters, G)
 
 def displayGraph(G, names):
-
+    """Displays star tree."""
     nameLabels = {it :names[it] for it in range(len(names))}
 
     fig = plt.figure(figsize=(8.0, 8.0))
@@ -138,6 +142,8 @@ def displayGraph(G, names):
     plt.show()
 
 def saveGraph(G, names, file_name):
+    """Saves star tree to png."""
+
     nameLabels = {it: names[it] for it in range(len(names))}
 
     fig = plt.figure(figsize=(8.0, 8.0))

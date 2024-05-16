@@ -1,5 +1,7 @@
 from Bio.Align.Applications import ClustalOmegaCommandline
 
+"""Run this file to perform Multiple Sequence Alignment."""
+
 input_file = "io/input_HLAA.txt"
 output_file = "io/aligned_HLAA.txt"
 

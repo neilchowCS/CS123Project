@@ -2,11 +2,11 @@ import matplotlib
 from Bio import Phylo
 
 
-def UPGMA(matrix, names1, digits_to_round):
+def UPGMA(matrix, names, digits_to_round):
+    """Performs UPGMA and returns tree in Newick format string."""
+    orig = names.copy()
 
-    orig = names1.copy()
-
-    names = [str(i) for i in range(len(names1))]
+    names1 = [str(i) for i in range(len(names))]
     nodes = {}
     nodesStr = {}
     newick = None
@@ -18,26 +18,27 @@ def UPGMA(matrix, names1, digits_to_round):
         #print("pair " + names[minimum[0]] + " and " + names[minimum[1]] + " distance " + str(m[minimum[0]][minimum[1]] / 2.0))
 
         newick = None
-        if ' ' in names[minimum[0]] and ' ' in names[minimum[1]]:
-            newick = "(" + nodesStr[names[minimum[0]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1], digits_to_round)) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1], digits_to_round)) + ")"
-        elif ' ' in names[minimum[1]]:
-            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, digits_to_round)) + "," + nodesStr[names[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[1]]][1], digits_to_round)) + ")"
-        elif ' ' in names[minimum[0]]:
-            newick = "(" + nodesStr[names[minimum[0]]] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names[minimum[0]]][1], digits_to_round)) + "," + orig[int(names[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, digits_to_round)) + ")"
+        if ' ' in names1[minimum[0]] and ' ' in names1[minimum[1]]:
+            newick = "(" + nodesStr[names1[minimum[0]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names1[minimum[0]]][1], digits_to_round)) + "," + nodesStr[names1[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names1[minimum[1]]][1], digits_to_round)) + ")"
+        elif ' ' in names1[minimum[1]]:
+            newick = "(" + orig[int(names1[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, digits_to_round)) + "," + nodesStr[names1[minimum[1]]][0] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names1[minimum[1]]][1], digits_to_round)) + ")"
+        elif ' ' in names1[minimum[0]]:
+            newick = "(" + nodesStr[names1[minimum[0]]] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0 - nodesStr[names1[minimum[0]]][1], digits_to_round)) + "," + orig[int(names1[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, digits_to_round)) + ")"
         else:
-            newick = "(" + orig[int(names[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, digits_to_round)) + "," + orig[int(names[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, digits_to_round)) + ")"
+            newick = "(" + orig[int(names1[minimum[0]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, digits_to_round)) + "," + orig[int(names1[minimum[1]])] + ":" + str(round(m[minimum[0]][minimum[1]] / 2.0, digits_to_round)) + ")"
 
-        nodesStr[names[minimum[0]] + " " + names[minimum[1]]] = (newick, m[minimum[0]][minimum[1]] / 2.0)
+        nodesStr[names1[minimum[0]] + " " + names1[minimum[1]]] = (newick, m[minimum[0]][minimum[1]] / 2.0)
 
-        m = regenerateMatrix(m, minimum[0], minimum[1], names)
+        m = regenerateMatrix(m, minimum[0], minimum[1], names1)
         #print(m)
 
     #print(nodes)
     print(newick)
     return newick
 
-#returns index of minimum in 2D array
+
 def findMinimum(matrix):
+    """Returns index of minimum in 2D array."""
     minimum = [0, 1]
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
@@ -48,9 +49,8 @@ def findMinimum(matrix):
     return minimum
 
 
-#recalculates distance matrix after combination and removal of nodes i and j (indices)
 def regenerateMatrix(matrix, i, j, names):
-
+    """Recalculates distance matrix after combination and removal of nodes i and j (indices)."""
     newMatrix = [[0.0 for x in range(len(matrix) + 1)] for y in range(len(matrix) + 1)]
     names.append(str(names[i]) + " " + str(names[j]))
 
@@ -72,8 +72,8 @@ def regenerateMatrix(matrix, i, j, names):
     return newMatrix
 
 
-#removes column/rows of index i and j from 2D array
 def reduceMatrix(matrix, i, j, names):
+    """Removes column/rows of index i and j from 2D array."""
     if j < i:
         temp = j
         j = i
