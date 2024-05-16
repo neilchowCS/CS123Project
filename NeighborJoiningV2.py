@@ -8,7 +8,6 @@ import numpy as np
 
 from mis import NeighborJoining
 
-
 def max_index_neighbor(graph, node):
     neighbors = list(graph.neighbors(node))
     if neighbors:
