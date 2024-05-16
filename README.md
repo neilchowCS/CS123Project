@@ -18,8 +18,9 @@ numpy library
 pandas library
 biopython library
 matplotlib library
+networkx library
 You can install the required Python libraries using pip:
-pip install numpy pandas biopython matplotlib
+pip install numpy pandas biopython matplotlib networkx
 
 Running the Analysis
 1. Enter all HLA A,B,C sequences into their respective input_HLA files.
