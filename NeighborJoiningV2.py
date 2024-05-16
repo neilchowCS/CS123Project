@@ -143,7 +143,7 @@ def displayGraph(G, names):
 
     plt.show()
 
-def saveGraph(G, names):
+def saveGraph(G, names, file_name):
     nameLabels = {it: names[it] for it in range(len(names))}
 
     fig = plt.figure(figsize=(8.0, 8.0))
@@ -167,7 +167,7 @@ def saveGraph(G, names):
     )
     fig.tight_layout()
 
-    plt.savefig('nj.png')
+    plt.savefig(file_name)
 
 
 

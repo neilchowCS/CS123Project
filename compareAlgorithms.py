@@ -8,22 +8,25 @@ import NeighborJoiningV2
 import UPGMA
 from GenerateMatrix import calculate_distance_matrix
 
-names = []
-alignment = AlignIO.read("aligned.txt", "fasta")
-for record in alignment:
-    names.append(record.id)
-    print(record.id)
+suffix = ["HLAA", "HLAB","HLAC"]
 
-distance_matrix = calculate_distance_matrix(alignment)
+for c in range(len(suffix)):
+    names = []
+    alignment = AlignIO.read("io/aligned_" + suffix[c] + ".txt", "fasta")
+    for record in alignment:
+        names.append(record.id)
+        print(record.id)
 
-upgma_result = UPGMA.UPGMA(distance_matrix,names, 4)
-nj_result = NeighborJoiningV2.NeighborJoining2(distance_matrix,4)
+    distance_matrix = calculate_distance_matrix(alignment)
 
-parser = Phylo.NewickIO.Parser.from_string(upgma_result)
-tree = parser.parse()
-Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length, do_show=False)
-plt.savefig('upgma.png')  # Adjust dpi as needed
-#plt.close()
+    upgma_result = UPGMA.UPGMA(distance_matrix,names, 4)
+    nj_result = NeighborJoiningV2.NeighborJoining2(distance_matrix,4)
 
-NeighborJoiningV2.saveGraph(nj_result[1], names)
-plt.show()
+    parser = Phylo.NewickIO.Parser.from_string(upgma_result)
+    tree = parser.parse()
+    Phylo.draw(list(tree)[0], branch_labels=lambda c: c.branch_length, do_show=False)
+    plt.savefig('io/upgma_' + suffix[c] + '.png')  # Adjust dpi as needed
+    #plt.close()
+
+    NeighborJoiningV2.saveGraph(nj_result[1], names, 'io/nj_' + suffix[c] + '.png')
+    plt.show()
